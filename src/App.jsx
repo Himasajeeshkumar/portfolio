@@ -15,8 +15,8 @@ export default function App() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-[#090a0f] text-slate-100 selection:bg-brand-cyan/25 selection:text-white">
-      {/* Interactive mouse cursor */}
+    <div className="relative min-h-screen bg-[#fafbfc] text-slate-800 selection:bg-indigo-500/20 selection:text-indigo-900 font-sans antialiased overflow-x-hidden">
+      {/* Real interactive mouse cursor with canvas trail & contextual pill */}
       <CustomCursor />
 
       {/* Top progress indicator */}

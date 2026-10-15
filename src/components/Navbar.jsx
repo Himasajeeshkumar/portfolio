@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, FileText, Sparkles, ExternalLink } from 'lucide-react';
+import { Menu, X, FileText } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 import { personalData } from '../data/portfolioData';
+import MagneticButton from './MagneticButton';
 
 export default function Navbar({ onOpenResumeModal }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,10 +20,10 @@ export default function Navbar({ onOpenResumeModal }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
 
       const sections = navItems.map((item) => item.href.substring(1));
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 220;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
@@ -37,7 +38,6 @@ export default function Navbar({ onOpenResumeModal }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on Esc key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setMobileMenuOpen(false);
@@ -64,27 +64,27 @@ export default function Navbar({ onOpenResumeModal }) {
             e.preventDefault();
             handleNavClick('#hero');
           }}
-          className="group flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#0e1017]/80 backdrop-blur-md border border-white/10 hover:border-brand-cyan/40 transition-all duration-300 shadow-lg shadow-black/40"
+          className="group flex items-center gap-2.5 px-3.5 py-2 rounded-2xl bg-white/90 backdrop-blur-xl border border-slate-200/80 hover:border-indigo-300 transition-all duration-300 shadow-md shadow-slate-200/40"
           aria-label="Hima Sajeesh Kumar - Back to top"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-cyan/20 to-brand-indigo/30 border border-brand-cyan/40 flex items-center justify-center font-mono font-bold text-sm text-brand-cyan group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-mono font-bold text-xs text-white shadow-sm group-hover:scale-105 transition-transform">
             HK
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-sm font-semibold text-slate-100 tracking-tight flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-900 tracking-tight flex items-center gap-1.5">
               Hima Sajeesh
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" title="Available for opportunities" />
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Available for opportunities" />
             </span>
-            <span className="text-[10px] font-mono text-slate-400 tracking-wider">SE &bull; AI/ML</span>
+            <span className="text-[10px] font-mono text-slate-500 tracking-wider">SE &bull; AI/ML</span>
           </div>
         </a>
 
         {/* Desktop Navigation Dock */}
         <nav
-          className={`hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full backdrop-blur-xl border transition-all duration-300 shadow-xl ${
+          className={`hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full backdrop-blur-2xl border transition-all duration-300 shadow-sm ${
             isScrolled
-              ? 'bg-[#0b0d14]/90 border-white/15 shadow-black/60 py-2'
-              : 'bg-[#0d0f17]/70 border-white/10 shadow-black/30'
+              ? 'bg-white/95 border-slate-200/90 shadow-md shadow-slate-200/50 py-2'
+              : 'bg-white/80 border-slate-200/70'
           }`}
           aria-label="Main Navigation"
         >
@@ -98,29 +98,26 @@ export default function Navbar({ onOpenResumeModal }) {
                   e.preventDefault();
                   handleNavClick(item.href);
                 }}
-                className={`relative px-3.5 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
+                className={`relative px-4 py-1.5 text-xs font-medium rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'text-white font-semibold'
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-white/5'
+                    ? 'text-indigo-700 font-bold bg-indigo-50/90 border border-indigo-100 shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`}
               >
-                {isActive && (
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-brand-cyan/20 to-brand-indigo/20 border border-brand-cyan/30 -z-10" />
-                )}
                 {item.label}
               </a>
             );
           })}
         </nav>
 
-        {/* Action Buttons: Resume Modal & Socials */}
+        {/* Action Controls: Socials & Magnetic Resume Button */}
         <div className="hidden md:flex items-center gap-2.5">
           <a
             href={personalData.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 rounded-xl bg-[#0e1017]/80 backdrop-blur-md border border-white/10 hover:border-brand-cyan/40 text-slate-300 hover:text-white transition-all hover:scale-105"
+            className="p-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/80 hover:border-slate-400 text-slate-600 hover:text-slate-900 transition-all hover:scale-105 shadow-sm"
           >
             <GithubIcon className="w-4 h-4" />
           </a>
@@ -129,29 +126,30 @@ export default function Navbar({ onOpenResumeModal }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-2 rounded-xl bg-[#0e1017]/80 backdrop-blur-md border border-white/10 hover:border-brand-cyan/40 text-slate-300 hover:text-white transition-all hover:scale-105"
+            className="p-2.5 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/80 hover:border-indigo-300 text-slate-600 hover:text-indigo-600 transition-all hover:scale-105 shadow-sm"
           >
             <LinkedinIcon className="w-4 h-4" />
           </a>
 
-          <button
+          <MagneticButton
             onClick={onOpenResumeModal}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-cyan/15 to-brand-indigo/20 hover:from-brand-cyan/25 hover:to-brand-indigo/35 text-brand-cyan border border-brand-cyan/40 text-xs font-medium tracking-wide shadow-lg shadow-brand-cyan/10 hover:shadow-brand-cyan/20 transition-all hover:scale-105 active:scale-95"
-            aria-label="View Resume Options"
+            cursorText="Resumes"
+            className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold tracking-wide shadow-md shadow-indigo-600/25 transition-all hover:scale-105 active:scale-95"
+            ariaLabel="View Resume Options"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
-            <span className="text-[10px] bg-brand-cyan/20 text-brand-cyan px-1.5 py-0.5 rounded-md font-mono">
+            <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded-md font-mono">
               2 Paths
             </span>
-          </button>
+          </MagneticButton>
         </div>
 
         {/* Mobile Menu Toggle Button */}
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={onOpenResumeModal}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-brand-cyan/15 border border-brand-cyan/40 text-brand-cyan text-xs font-medium"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold shadow-xs"
             aria-label="Open Resume Options"
           >
             <FileText className="w-3.5 h-3.5" />
@@ -160,7 +158,7 @@ export default function Navbar({ onOpenResumeModal }) {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl bg-[#0e1017]/90 backdrop-blur-md border border-white/15 text-slate-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-brand-cyan"
+            className="p-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-sm"
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
             aria-expanded={mobileMenuOpen}
           >
@@ -171,7 +169,7 @@ export default function Navbar({ onOpenResumeModal }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 max-w-6xl mx-auto rounded-2xl bg-[#0b0d14]/95 backdrop-blur-2xl border border-white/15 p-5 shadow-2xl pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden mt-3 max-w-6xl mx-auto rounded-3xl bg-white/95 backdrop-blur-2xl border border-slate-200 p-5 shadow-2xl pointer-events-auto animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="flex flex-col gap-2">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.substring(1);
@@ -183,10 +181,10 @@ export default function Navbar({ onOpenResumeModal }) {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                  className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                     isActive
-                      ? 'bg-brand-cyan/15 text-brand-cyan font-semibold border border-brand-cyan/30'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'bg-indigo-50 text-indigo-700 border border-indigo-100'
+                      : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   {item.label}
@@ -194,13 +192,13 @@ export default function Navbar({ onOpenResumeModal }) {
               );
             })}
 
-            <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-3">
+            <div className="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-2">
                 <a
                   href={personalData.socials.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white/5 text-slate-300 hover:text-white"
+                  className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900"
                   aria-label="GitHub"
                 >
                   <GithubIcon className="w-4 h-4" />
@@ -209,7 +207,7 @@ export default function Navbar({ onOpenResumeModal }) {
                   href={personalData.socials.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-white/5 text-slate-300 hover:text-white"
+                  className="p-2 rounded-xl bg-slate-100 text-slate-600 hover:text-indigo-600"
                   aria-label="LinkedIn"
                 >
                   <LinkedinIcon className="w-4 h-4" />
@@ -221,7 +219,7 @@ export default function Navbar({ onOpenResumeModal }) {
                   setMobileMenuOpen(false);
                   onOpenResumeModal();
                 }}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-brand-cyan text-[#090a0f] font-semibold text-xs"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs shadow-md shadow-indigo-600/20"
               >
                 <FileText className="w-3.5 h-3.5" />
                 <span>Download Resumes</span>

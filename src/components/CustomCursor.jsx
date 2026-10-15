@@ -1,97 +1,166 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [trail, setTrail] = useState({ x: -100, y: -100 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(true);
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const labelRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const [isSupported, setIsSupported] = useState(false);
+  const [cursorLabel, setCursorLabel] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Check if pointer is fine (desktop mouse) and reduced motion is not preferred
+    // Only enable on desktop pointer devices and when reduced motion is not requested
     const finePointer = window.matchMedia('(pointer: fine)').matches;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (!finePointer || reducedMotion) {
-      setIsTouchDevice(true);
+    if (!finePointer || prefersReducedMotion) {
+      setIsSupported(false);
       return;
     }
 
-    setIsTouchDevice(false);
+    setIsSupported(true);
 
-    let animationFrameId;
+    const mouse = { x: -100, y: -100 };
+    const ring = { x: -100, y: -100 };
+    const particles = [];
+    const MAX_PARTICLES = 12;
 
-    const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
+    let animId;
+    let canvas = canvasRef.current;
+    let ctx = canvas ? canvas.getContext('2d') : null;
+
+    const handleResize = () => {
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    const handlePointerMove = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+
+      // Add a fading trail particle
+      if (particles.length < MAX_PARTICLES) {
+        particles.push({
+          x: mouse.x,
+          y: mouse.y,
+          radius: 4,
+          alpha: 0.6,
+        });
+      }
+
+      // Check for contextual cursor labels and interactive hover
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      const interactiveEl = target ? target.closest('a, button, [role="button"], input, textarea, [data-cursor]') : null;
+      
+      if (interactiveEl) {
+        setIsHovered(true);
+        const labelText = interactiveEl.getAttribute('data-cursor-text') || '';
+        setCursorLabel(labelText);
+      } else {
+        setIsHovered(false);
+        setCursorLabel('');
+      }
     };
 
-    const handleMouseLeave = () => {
-      setIsVisible(false);
+    const handlePointerLeave = () => {
+      mouse.x = -100;
+      mouse.y = -100;
     };
 
-    const handleMouseEnter = () => {
-      setIsVisible(true);
+    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    document.addEventListener('mouseleave', handlePointerLeave);
+
+    // High performance render loop via requestAnimationFrame (Zero React re-renders for coordinates)
+    const render = () => {
+      // 1. Direct Dot Position Update
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      // 2. Smooth Interpolated Ring Position Update (Lerp 0.16)
+      ring.x += (mouse.x - ring.x) * 0.16;
+      ring.y += (mouse.y - ring.y) * 0.16;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%)`;
+      }
+
+      // 3. Render subtle fading trail particles
+      if (ctx && canvasRef.current) {
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.alpha -= 0.035;
+          p.radius *= 0.94;
+
+          if (p.alpha <= 0 || p.radius <= 0.5) {
+            particles.splice(i, 1);
+            i--;
+            continue;
+          }
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha * 0.4})`;
+          ctx.fill();
+        }
+      }
+
+      animId = requestAnimationFrame(render);
     };
 
-    // Smooth trailing animation
-    const updateTrail = () => {
-      setTrail((prev) => ({
-        x: prev.x + (position.x - prev.x) * 0.18,
-        y: prev.y + (position.y - prev.y) * 0.18,
-      }));
-      animationFrameId = requestAnimationFrame(updateTrail);
-    };
-
-    // Interactive element hover detection
-    const handleElementHover = (e) => {
-      const target = e.target.closest('a, button, [role="button"], input, textarea, .interactive-hover');
-      setIsHovering(!!target);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mouseover', handleElementHover, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    animationFrameId = requestAnimationFrame(updateTrail);
+    animId = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseover', handleElementHover);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('resize', handleResize);
+      document.removeEventListener('mouseleave', handlePointerLeave);
+      cancelAnimationFrame(animId);
     };
-  }, [position.x, position.y, isVisible]);
+  }, []);
 
-  if (isTouchDevice || !isVisible) return null;
+  if (!isSupported) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden transition-opacity duration-300">
-      {/* Outer Glow Halo */}
-      <div
-        className="fixed top-0 left-0 rounded-full transition-transform duration-75 ease-out"
-        style={{
-          transform: `translate3d(${trail.x}px, ${trail.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 1.6 : 1})`,
-          width: '36px',
-          height: '36px',
-          background: isHovering
-            ? 'radial-gradient(circle, rgba(0, 242, 254, 0.25) 0%, rgba(99, 102, 241, 0.05) 70%, transparent 100%)'
-            : 'radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, transparent 70%)',
-          border: isHovering ? '1px solid rgba(0, 242, 254, 0.4)' : '1px solid rgba(255, 255, 255, 0.15)',
-        }}
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+      {/* Canvas for fading trail particles */}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none fixed inset-0 z-40"
       />
 
-      {/* Center Precise Dot */}
+      {/* Smooth outer ring */}
       <div
-        className="fixed top-0 left-0 rounded-full transition-transform duration-0 ease-linear"
+        ref={ringRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 rounded-full transition-all duration-200 ease-out flex items-center justify-center"
         style={{
-          transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%) scale(${isHovering ? 0.6 : 1})`,
-          width: '6px',
-          height: '6px',
-          backgroundColor: isHovering ? '#00f2fe' : '#ffffff',
-          boxShadow: '0 0 10px #00f2fe',
+          width: cursorLabel ? '84px' : isHovered ? '50px' : '34px',
+          height: cursorLabel ? '34px' : isHovered ? '50px' : '34px',
+          borderRadius: cursorLabel ? '17px' : '50%',
+          backgroundColor: isHovered ? 'rgba(99, 102, 241, 0.14)' : 'rgba(99, 102, 241, 0.08)',
+          border: '1.5px solid rgba(99, 102, 241, 0.45)',
+          backdropFilter: 'blur(3px)',
+          boxShadow: '0 4px 14px rgba(99, 102, 241, 0.18)',
         }}
+      >
+        {cursorLabel && (
+          <span className="text-[11px] font-sans font-semibold tracking-wide text-indigo-900 px-2 select-none whitespace-nowrap">
+            {cursorLabel}
+          </span>
+        )}
+      </div>
+
+      {/* Center precise dot */}
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 pointer-events-none z-50 w-2 h-2 rounded-full bg-indigo-600 shadow-[0_0_8px_rgba(79,70,229,0.8)]"
       />
     </div>
   );
