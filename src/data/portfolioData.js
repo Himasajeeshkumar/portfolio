@@ -1,0 +1,236 @@
+export const personalData = {
+  name: "Hima Sajeesh Kumar",
+  headline: "Software Engineer | AI/ML Developer",
+  summary: "Computer Science student specializing in AI & Machine Learning with hands-on experience building full-stack web applications, semantic search tools, and applied machine learning pipelines. Passionate about bridging software engineering with applied AI to create practical, high-impact systems.",
+  tagline: "I build software applications and intelligent systems that turn ideas into practical solutions.",
+  status: "Open for Internships & Entry-Level Roles (2026 / 2027)",
+  location: "Bengaluru, Karnataka, India",
+  phone: "+91 7306068726",
+  email: "himasajeesh2005@gmail.com",
+  socials: {
+    github: "https://github.com/Himasajeeshkumar",
+    linkedin: "https://www.linkedin.com/in/himasajeeshkumar/",
+    leetcode: "https://leetcode.com/u/Himasajeesh",
+  },
+  education: {
+    degree: "Bachelor of Technology, Computer Science Engineering (AI & ML)",
+    university: "JAIN (Deemed-to-be University), Faculty of Engineering and Technology",
+    cgpa: "8.35 / 10 (Till Semester VI)",
+    graduation: "Expected 2027",
+    coursework: [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming (Java/Python)",
+      "Deep Learning & Neural Networks",
+      "Natural Language Processing",
+      "Computer Vision",
+      "Database Management Systems (SQL)",
+      "Web Technologies & REST APIs",
+    ],
+  },
+  profilePhoto: "/images/hima.png",
+};
+
+export const resumes = {
+  softwareEngineer: {
+    id: "software-engineer",
+    title: "Software Engineering Resume",
+    focus: "Full-Stack & Backend Development",
+    file: "/resumes/software-engineer-resume.pdf",
+    description: "Tailored for Software Engineer, Full-Stack Developer, and Backend roles. Highlights React.js, Node.js, Express, REST APIs, Python, Java, SQL, and system architecture.",
+    coreSkills: ["React.js", "Node.js", "Express.js", "REST APIs", "Python", "Java", "SQL", "Vite", "Git"],
+  },
+  aimlEngineer: {
+    id: "aiml-engineer",
+    title: "AI & Machine Learning Resume",
+    focus: "Applied AI, NLP & Computer Vision",
+    file: "/resumes/aiml-engineer-resume.pdf",
+    description: "Tailored for AI/ML Engineer, Applied AI, and Research roles. Highlights TensorFlow, Sentence Transformers, FAISS Vector Search, DistilBERT fine-tuning, and Attention models.",
+    coreSkills: ["TensorFlow", "Sentence Transformers", "FAISS", "DistilBERT", "NLP", "Computer Vision", "Scikit-learn", "Python"],
+  },
+};
+
+export const skillCategories = [
+  {
+    category: "Programming Languages",
+    description: "Core languages used for algorithms, backend services, and machine learning pipelines",
+    skills: [
+      { name: "Python", level: "Primary", tag: "AI/ML & Backend", icon: "Code2" },
+      { name: "Java", level: "Core", tag: "OOP & DSA", icon: "FileCode" },
+      { name: "SQL", level: "Core", tag: "Relational DBs", icon: "Database" },
+      { name: "JavaScript", level: "Primary", tag: "Web & Full-Stack", icon: "Braces" },
+    ],
+  },
+  {
+    category: "AI / Machine Learning & Data",
+    description: "Deep learning frameworks, embedding engines, and vector similarity search systems",
+    skills: [
+      { name: "TensorFlow & Keras", level: "Applied", tag: "Deep Learning", icon: "Cpu" },
+      { name: "Sentence Transformers", level: "Applied", tag: "Embeddings", icon: "Network" },
+      { name: "FAISS & Vector Search", level: "Applied", tag: "Similarity Search", icon: "Search" },
+      { name: "DistilBERT", level: "Applied", tag: "Model Fine-Tuning", icon: "Layers" },
+      { name: "Scikit-learn", level: "Core", tag: "ML Algorithms", icon: "Boxes" },
+      { name: "Pandas & NumPy", level: "Core", tag: "Data Processing", icon: "Binary" },
+      { name: "Computer Vision", level: "Specialization", tag: "CNN & Attention", icon: "Eye" },
+      { name: "NLP & Semantic Search", level: "Specialization", tag: "Information Retrieval", icon: "Sparkles" },
+      { name: "Prompt Engineering", level: "Applied", tag: "LLM Orchestration", icon: "Terminal" },
+    ],
+  },
+  {
+    category: "Web & Backend Development",
+    description: "Modern frontend frameworks, runtime environments, and service architectures",
+    skills: [
+      { name: "React.js", level: "Primary", tag: "Frontend UI", icon: "Component" },
+      { name: "Node.js", level: "Primary", tag: "Runtime", icon: "Server" },
+      { name: "Express.js", level: "Primary", tag: "REST APIs", icon: "Zap" },
+      { name: "REST APIs", level: "Core", tag: "API Design", icon: "Network" },
+      { name: "HTML5 & CSS3", level: "Core", tag: "Responsive UI", icon: "Layout" },
+      { name: "Vite", level: "Tooling", tag: "Build Tool", icon: "Flame" },
+      { name: "Tailwind CSS", level: "Styling", tag: "Design Systems", icon: "Palette" },
+    ],
+  },
+  {
+    category: "Tools & Platforms",
+    description: "Developer tooling, collaboration platforms, and demonstration environments",
+    skills: [
+      { name: "Git & GitHub", level: "Essential", tag: "Version Control", icon: "GitBranch" },
+      { name: "VS Code", level: "Essential", tag: "IDE", icon: "Laptop" },
+      { name: "Google Colab & Jupyter", level: "Applied", tag: "ML Experimentation", icon: "BookOpen" },
+      { name: "Gradio & Streamlit", level: "Applied", tag: "ML Web Interfaces", icon: "MonitorPlay" },
+      { name: "npm", level: "Essential", tag: "Package Management", icon: "Package" },
+    ],
+  },
+];
+
+export const projects = [
+  {
+    id: "futuretwin-ai",
+    name: "FutureTwin AI",
+    category: "Full Stack",
+    secondaryCategory: "AI/ML",
+    subtitle: "AI-Powered Career Development Platform",
+    featured: true,
+    description: "Full-stack career development platform combining resume parsing, ATS scoring, and AI-driven feedback using React.js, Node.js/Express.js, and the Groq API.",
+    liveUrl: "https://futuretwin-ai-1.onrender.com/",
+    githubUrl: "https://github.com/Himasajeeshkumar/FutureTwin-AI",
+    image: "/images/futuretwin-home.png",
+    fallbackType: "futuretwin",
+    problemSolved: "Job applicants often struggle to understand how applicant tracking systems (ATS) evaluate their resumes and lack personalized, instantaneous feedback to align their skills with specific roles.",
+    myContribution: "Architected the full-stack web application with React.js and Express.js, integrated Groq API for real-time resume analysis, and built in-browser PDF text extraction and PDF resume generation using pdf.js, html2canvas, and jsPDF.",
+    technologies: ["React.js", "Node.js", "Express.js", "Groq API", "JavaScript", "pdf.js", "html2canvas", "jsPDF", "REST APIs"],
+    highlights: [
+      "Real-time ATS scoring & automated feedback using high-throughput Groq API integration",
+      "In-browser PDF extraction and interactive resume builder with instantaneous PDF export",
+      "Modular backend architecture designed with independent, reusable microservices for parsing and job matching",
+      "Live deployment hosted on Render with responsive user experience",
+    ],
+  },
+  {
+    id: "ai-code-assistant",
+    name: "AI Code Assistant",
+    category: "AI/ML",
+    secondaryCategory: "Software Engineering",
+    subtitle: "Semantic Code Search Tool",
+    featured: false,
+    description: "Semantic code retrieval engine that indexes the CodeSearchNet dataset and retrieves relevant code snippets from natural-language queries using vector embeddings and similarity search.",
+    liveUrl: null,
+    githubUrl: "https://github.com/Himasajeeshkumar/AI-Code-Assistant",
+    image: "/images/ai-code-assistant.png",
+    fallbackType: "code-search",
+    problemSolved: "Traditional keyword-based code search struggles when developers describe programming intent using conceptual or colloquial terms rather than exact function names.",
+    myContribution: "Engineered the end-to-end vector retrieval pipeline, generated dense embeddings with Sentence Transformers, indexed the CodeSearchNet dataset with FAISS and Scikit-learn, and developed an interactive Gradio interface for queries.",
+    technologies: ["Python", "Sentence Transformers", "all-MiniLM-L6-v2", "FAISS", "Scikit-learn", "Pandas", "NumPy", "Gradio"],
+    highlights: [
+      "Translates natural language questions into 384-dimensional dense vector embeddings",
+      "Sub-second nearest-neighbor search across CodeSearchNet code repository",
+      "Pure semantic matching capable of retrieving correct code even with zero keyword overlap",
+      "Interactive Gradio UI deployed for live demonstration and testing",
+    ],
+  },
+  {
+    id: "visual-sequence-decoder",
+    name: "Visual Caption Generator",
+    category: "AI/ML",
+    secondaryCategory: "Computer Vision",
+    subtitle: "CNN-LSTM Image Captioning with Bahdanau Attention",
+    featured: false,
+    description: "Deep learning vision-language architecture combining a CNN encoder, Bahdanau additive attention mechanism, and an LSTM decoder trained on the Flickr8k dataset to produce natural language descriptions.",
+    liveUrl: null,
+    githubUrl: "https://github.com/Sayaan-cloud/visual-seq-decoder",
+    image: "/images/visual-sequence-decoder.png",
+    fallbackType: "visual-decoder",
+    problemSolved: "Generating accurate descriptions for arbitrary images requires capturing both global visual semantics and localized spatial focus at each step of sequence generation.",
+    myContribution: "Collaborated in a team to build the image captioning system: prepared and cleaned datasets, built tokenization and caption cleaning pipelines, and tracked model evaluation metrics using TensorFlow.",
+    technologies: ["Python", "TensorFlow", "Keras", "CNN Encoder", "LSTM Decoder", "Bahdanau Attention", "Flickr8k", "NumPy"],
+    highlights: [
+      "Bahdanau attention dynamically focuses on relevant image subregions while generating each word",
+      "End-to-end dataset preprocessing: tokenization, vocabulary mapping, and caption normalization",
+      "Evaluation tracking and documented performance metrics for visual captioning iterations",
+      "Collaborative open-source team implementation on GitHub",
+    ],
+  },
+];
+
+export const experience = [
+  {
+    role: "Artificial Intelligence Intern",
+    company: "SkillOrbit Pvt Ltd",
+    location: "Remote",
+    period: "Jan 2026 – Feb 2026",
+    type: "Internship",
+    description: "Engineered applied AI solutions including vector-based code retrieval and fine-tuned NLP classification models.",
+    achievements: [
+      "Built a semantic code retrieval tool using Sentence Transformers embeddings and FAISS similarity search to return relevant code snippets from CodeSearchNet dataset based on natural language queries.",
+      "Developed an AI resume screening system by fine-tuning a DistilBERT model to classify resumes into 24 job categories, reaching 75.86% accuracy on CPU without GPU training.",
+      "Designed a hybrid scoring algorithm combining semantic similarity metrics and rule-based matching to automate candidate shortlisting decisions.",
+      "Built and deployed interactive web interfaces for two production systems end-to-end using Gradio and Streamlit.",
+    ],
+    technologies: ["Python", "Sentence Transformers", "FAISS", "DistilBERT", "Gradio", "Streamlit", "Scikit-learn"],
+  },
+  {
+    role: "AI/ML Intern",
+    company: "Evoastra Ventures Inc.",
+    location: "Remote",
+    period: "Nov 2025 – Dec 2025",
+    type: "Internship",
+    description: "Maintained data engineering pipelines and conducted model evaluation for computer vision and deep learning systems.",
+    achievements: [
+      "Prepared and cleaned datasets for an image captioning pipeline, including caption normalization, cleaning, and tokenization for downstream deep learning model training.",
+      "Tracked and documented evaluation results for a TensorFlow-based visual captioning system, supporting iterative model tuning and performance improvement.",
+      "Maintained data preprocessing consistency across training, validation, and test splits.",
+    ],
+    technologies: ["Python", "TensorFlow", "Data Pipelines", "Tokenization", "Model Evaluation"],
+  },
+];
+
+export const certifications = [
+  {
+    title: "Google AI Essentials",
+    issuer: "Google",
+    tag: "Artificial Intelligence",
+  },
+  {
+    title: "Introduction to Computer Vision and Image Processing",
+    issuer: "IBM",
+    tag: "Computer Vision",
+  },
+  {
+    title: "Probability & Statistics for Machine Learning & Data Science",
+    issuer: "DeepLearning.AI",
+    tag: "Foundational ML",
+  },
+  {
+    title: "Foundations of Data Science and Machine Learning with Python",
+    issuer: "Packt",
+    tag: "Data Science",
+  },
+  {
+    title: "Build a Machine Learning Web App with Streamlit and Python",
+    issuer: "Coursera",
+    tag: "Applied AI / Web",
+  },
+  {
+    title: "100 Days of Code: The Complete Python Pro Bootcamp",
+    issuer: "Udemy",
+    tag: "Python Engineering",
+  },
+];
